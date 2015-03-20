@@ -1,4 +1,5 @@
 <?php
+ob_start();
 
 class vertex
 {
@@ -13,7 +14,7 @@ class vertex
         $this->key  = $key;
     }
 }
- 
+
 class PriorityQueue extends SplPriorityQueue
 {
     public function compare($a, $b)
@@ -29,6 +30,15 @@ $v2 = new vertex(2);
 $v3 = new vertex(3);
 $v4 = new vertex(4);
 $v5 = new vertex(5);
+
+$vertexs = array(
+    0=>$v0,
+    $v1,
+    $v2,
+    $v3,
+    $v4,
+    $v5,
+);
  
 $list0 = new SplDoublyLinkedList();
 $list0->push(array('vertex' => $v1, 'distance' => 3));
@@ -135,22 +145,21 @@ for($key = 0; $key <=5; $tempDistances[$key++] = 0);
 
 for($key = 0; $key <=5; $key++) {
     $tempStringKey = 'v'.$key;
+    calcShortestPaths($vertexs[$key], $adjacencyList);
     for($k = 0; $k <= 5; $k++) {
-        calcShortestPaths($$tempStringKey, $adjacencyList);
-        $tempStringVertexKey = 'v'.$k;
-        $tempVertex = $$tempStringVertexKey;
-        echo '-------------------------- ',PHP_EOL;
-        echo 'Informacoes entre a rua ',$key,' e a rua ',$tempVertex->key,PHP_EOL;
-        echo 'Caminho: [' . implode(', ', $tempVertex->path) . ']' . PHP_EOL;
-        echo 'Distancia: ', $tempVertex->distance . PHP_EOL . PHP_EOL;
-        $tempDistances[$key] += $tempVertex->distance;
-        $tempDistances[$k] += $tempVertex->distance;
+            $tempVertex = $vertexs[$k];
+            echo '-------------------------- ', PHP_EOL;
+            echo 'Informacoes entre a rua ', $key, ' e a rua ', $tempVertex->key, PHP_EOL;
+            echo 'Caminho: [' . implode(', ', $tempVertex->path) . ']' . PHP_EOL;
+            echo 'Distancia: ', $tempVertex->distance . PHP_EOL . PHP_EOL;
+            $tempDistances[$key] += $tempVertex->distance;
+            //$tempDistances[$k] += $tempVertex->distance;
 
-        var_dump($key.' - '.$tempDistances[$key]);
-        var_dump($k.' - '.$tempDistances[$k]);
-        echo PHP_EOL . PHP_EOL;
-        echo '-------------------------- ',PHP_EOL;
-        echo '+',PHP_EOL;
+            var_dump($key . ' - ' . $tempDistances[$key]);
+            var_dump($k . ' - ' . $tempDistances[$k]);
+            echo PHP_EOL . PHP_EOL;
+            echo '-------------------------- ', PHP_EOL;
+            echo '+', PHP_EOL;
     }
 }
 
