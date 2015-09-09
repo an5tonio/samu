@@ -235,10 +235,19 @@ function calcShortestPaths(vertex $start, &$adjLists)
             </td>
           </tr>
         <?php
+
+          resetCreateGlobalVars();
         }
+        asort($sum);
         ?>
         </tbody>
+
       </table>
+
+      <div class="page-header">
+        <h3>Melhor cruzamento para posicionamente de uma ambulância da SAMU</h3>
+        <h1><?php echo array_keys($sum)[0]; ?></h1>
+      </div>
     </div>
 
     <footer class="footer">
