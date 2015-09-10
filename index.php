@@ -138,10 +138,20 @@ function calcShortestPaths(vertex $start, &$adjLists)
   <head>
     <meta charset="utf-8">
     <title>Atividade Estrutura de Dados Não Lineares - Samu</title>
+    <script type="text/javascript" src="js/vis.js"></script>
 
     <link rel="stylesheet" href="css/bootstrap.css" media="screen" title="no title" charset="utf-8">
     <link rel="stylesheet" href="css/navbar.css" media="screen" title="no title" charset="utf-8">
     <link rel="stylesheet" href="css/sticky-footer.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="css/vis.css" media="screen" title="no title" charset="utf-8">
+
+    <style type="text/css">
+      #mynetwork {
+        width: 1024px;
+        height: 400px;
+        border: 1px solid lightgray;
+      }
+    </style>
   </head>
   <body>
     <!-- Begin page content -->
@@ -157,7 +167,9 @@ function calcShortestPaths(vertex $start, &$adjLists)
         <h3>Mapeamento de valores do grafo</h3>
       </div>
       <?php
+      $connections = [];
       foreach($adjacencyList as $kk => $valor){
+        $connections[$kk] = [];
       ?>
       <table class="table table-hover">
         <thead>
@@ -178,6 +190,7 @@ function calcShortestPaths(vertex $start, &$adjLists)
         <tbody>
           <?php
           foreach($valor as $jj => $value){
+            if(!@array_key_exists($kk, $connections[$value['vertex']->key])) $connections[$kk][$value['vertex']->key] = $value['distance'];
           ?>
           <tr>
             <td>
@@ -246,8 +259,44 @@ function calcShortestPaths(vertex $start, &$adjLists)
 
       <div class="page-header">
         <h3>Melhor cruzamento para posicionamente de uma ambulância da SAMU</h3>
-        <h1><?php echo array_keys($sum)[0]; ?></h1>
+        <h1><?php echo $bestNode = array_keys($sum)[0]; ?></h1>
       </div>
+
+      <div class="page-header">
+        <h3>Esboço gráfico do grafo</h3>
+        <div id="mynetwork"></div>
+      </div>
+
+      <script type="text/javascript">
+        // create an array with nodes
+        var nodes = new vis.DataSet([
+          <?php for($x = 0; $x < 6; $x++){ ?>
+          {id: <?php echo $x; ?>, label: 'V<?php echo $x; ?>'<?php if($x == $bestNode){?>, color: '#F03967' <?php } ?>},
+          <?php } ?>
+        ]);
+
+        // create an array with edges
+        var edges = new vis.DataSet([
+          <?php
+          foreach($connections as $k => $connection){
+            foreach($connection as $j => $value){
+          ?>
+          {from: <?php echo $k; ?>, to: <?php echo $j; ?>, label: <?php echo $value;?>, color: 'blue'},
+          <?php
+            }
+          }
+          ?>
+        ]);
+
+        // create a network
+        var container = document.getElementById('mynetwork');
+        var data = {
+          nodes: nodes,
+          edges: edges
+        };
+        var options = {};
+        var network = new vis.Network(container, data, options);
+      </script>
     </div>
 
     <footer class="footer">
