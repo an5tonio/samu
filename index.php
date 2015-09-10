@@ -30,10 +30,6 @@ function resetCreateGlobalVars(){
           $adjacencyList
   ;
 
-  // unset($v0,$v1,$v2,$v3,$v4,$v5,
-  // $list0, $list1, $list2, $list3, $list4, $list5,
-  // $adjacencyList);
-
   $v0 = new vertex(0);
   $v1 = new vertex(1);
   $v2 = new vertex(2);
@@ -122,16 +118,7 @@ function calcShortestPaths(vertex $start, &$adjLists)
         $q->rewind();
     }
 }
-// var_dump($adjacencyList);
-// foreach($adjacencyList as $kk => $valor){
-//   var_dump("aqui");
-//   foreach($valor as $jj => $value){
-//     var_dump('ali');
-//     var_dump($jj);
-//     var_dump($value);
-//
-//   }
-// }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -227,7 +214,6 @@ function calcShortestPaths(vertex $start, &$adjLists)
         for($x = 0; $x < 6; $x++){
           $sum[$x] = 0;
           $vertexName = "v$x";
-          // var_dump($vertexName);
 
           calcShortestPaths($$vertexName, $adjacencyList);
 
@@ -306,25 +292,3 @@ function calcShortestPaths(vertex $start, &$adjLists)
     </footer>
   </body>
 </html>
-<?php
-
-// $sum = [];
-//
-// for($x = 0; $x < 6; $x++){
-//   $sum[$x] = 0;
-//   $vertexName = "v$x";
-//   var_dump($vertexName);
-//
-//   calcShortestPaths($$vertexName, $adjacencyList);
-//
-//   for($j = 0; $j < 6; $j++){
-//     $vertexJName = "v$j";
-//     echo '[' . implode(', ', $$vertexJName->path) . ']'.PHP_EOL;
-//     echo  $$vertexJName->distance.PHP_EOL;
-//
-//     $sum[$x] += $$vertexJName->distance;
-//   }
-//   echo 'soma v', $x, ' = ', $sum[$x], PHP_EOL;
-//
-//   resetCreateGlobalVars();
-// }
